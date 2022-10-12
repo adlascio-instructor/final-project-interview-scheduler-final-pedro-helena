@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import "./App.scss";
 
@@ -9,8 +9,34 @@ import appointmentsData from "./components/__mocks__/appointments.json";
 
 export default function Application() {
   const [day, setDay] = useState("Monday");
-  const [days, setDays] = useState(daysData);
-  const [appointments, setAppointments] = useState(appointmentsData);
+  const [days, setDays] = useState({});
+  const [appointments, setAppointments] = useState({});
+
+  useEffect(() => {
+    fetch("http://localhost:8000/days")
+      .then((res) => res.json())
+      .then(
+        (result) => {
+          console.log(result);
+          setDays(result);
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+
+    fetch("http://localhost:8000/appointments")
+      .then((res) => res.json())
+      .then(
+        (result) => {
+          setAppointments(result);
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+  }, []);
+
   function bookInterview(id, interview) {
     console.log(id, interview);
     const isEdit = appointments[id].interview;
