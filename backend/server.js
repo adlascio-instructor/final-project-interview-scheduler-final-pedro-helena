@@ -94,3 +94,35 @@ app.get("/appointments", (req, res) => {
     }
   });
 });
+
+app.get("/interviewer", (req, res) => {
+  let db = new sqlite3.Database("backend.db", sqlite3.OPEN_READWRITE, (err) => {
+    if (err) {
+      console.error(err.message);
+    }
+  });
+
+  let interviwers = {};
+
+  //faltar INSERT dados (criar um .post)
+  const sql = `SELECT id, name, avatar FROM interviewer`;
+  db.all(sql, [], (err, rows) => {
+    if (err) {
+      throw err;
+    }
+    rows.forEach((row) => {
+      interviwers[row.name] = {
+        id: row.id,
+        name: row.name,
+        avatar: row.avatar,
+      };
+    });
+    res.send(interviwers);
+  });
+
+  db.close((err) => {
+    if (err) {
+      console.error(err.message);
+    }
+  });
+});
