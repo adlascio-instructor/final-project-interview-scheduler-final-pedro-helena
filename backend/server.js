@@ -56,7 +56,10 @@ app.get("/days/:id/appointments", (req, res) => {
       throw err;
     }
     rows.forEach((row) => {
-      appointmentsOnDay[row.id] = { id: row.id, time: row.time };
+      appointmentsOnDay[row.id] = {
+        id: row.id,
+        time: row.time,
+      };
     });
     res.send(appointmentsOnDay);
   });
@@ -118,6 +121,69 @@ app.get("/interviewer", (req, res) => {
       };
     });
     res.send(interviwers);
+  });
+
+  db.close((err) => {
+    if (err) {
+      console.error(err.message);
+    }
+  });
+});
+
+app.get("/days/:id/interviews", (req, res) => {
+  let db = new sqlite3.Database("backend.db", sqlite3.OPEN_READWRITE, (err) => {
+    if (err) {
+      console.error(err.message);
+    }
+  });
+
+  let interviewsOnDay = {};
+
+  const sql = `SELECT id, student, interviewer_id, appointment_id FROM interview where day_id=${req.params.id}`;
+  db.all(sql, [], (err, rows) => {
+    if (err) {
+      throw err;
+    }
+    rows.forEach((row) => {
+      interviewsOnDay[row.id] = {
+        id: row.id,
+        student: row.student,
+        interviewer_id: interviewer_id,
+        appointment_id: appointment_id,
+      };
+    });
+    res.send(interviewsOnDay);
+  });
+
+  db.close((err) => {
+    if (err) {
+      console.error(err.message);
+    }
+  });
+});
+
+//availableInterviewers
+app.get("/days/:id/availableInterviewers", (req, res) => {
+  let db = new sqlite3.Database("backend.db", sqlite3.OPEN_READWRITE, (err) => {
+    if (err) {
+      console.error(err.message);
+    }
+  });
+
+  let avaiableInterviewer = {};
+
+  const sql = `SELECT id, interviewer_id  FROM avaiableInterviewer where day_id=${req.params.id}`;
+  db.all(sql, [], (err, rows) => {
+    if (err) {
+      throw err;
+    }
+    rows.forEach((row) => {
+      avaiableInterviewer[row.id] = {
+        id: row.id,
+        interviewer_id: interviewer_id,
+      };
+    });
+    res.send(avaiableInterviewer);
   });
 
   db.close((err) => {

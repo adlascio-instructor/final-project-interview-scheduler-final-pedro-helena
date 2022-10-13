@@ -14,22 +14,29 @@ CREATE TABLE appointment(
 CREATE TABLE interview(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     student text,
-    interview_id
-    FOREIGN KEY(interviewer_id) REFERENCES interviewer(id)
+    interviewer_id INTEGER,
+    appointment_id INTEGER,
+    day_id INTEGER,
+    FOREIGN KEY(interviewer_id) REFERENCES interviewer(id),
     FOREIGN KEY(appointment_id) REFERENCES appointment(id)
+    FOREIGN KEY(day_id) REFERENCES days(id)
 );
 
 CREATE TABLE interviewer(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     name text,
-    avatar text
+    avatar text,
+    day_id INTEGER,
+    FOREIGN KEY(day_id) REFERENCES days(id)
 );
 
 CREATE TABLE avaiableInterviewer(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    FOREIGN KEY(interviewer_id) REFERENCES interviewer(id)
+    interviewer_id INTEGER,
+    day_id INTEGER,
+    FOREIGN KEY(interviewer_id) REFERENCES interviewer(id),
     FOREIGN KEY(day_id) REFERENCES days(id)
-)
+);
 
 INSERT INTO days(id, name, spots)
 VALUES
