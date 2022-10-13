@@ -172,7 +172,7 @@ app.get("/days/:id/availableInterviewers", (req, res) => {
 
   let avaiableInterviewer = {};
 
-  const sql = `SELECT id, interviewer_id  FROM avaiableInterviewer where day_id=${req.params.id}`;
+  const sql = `SELECT id, interviewer_id FROM avaiableInterviewer where day_id=${req.params.id}`;
   db.all(sql, [], (err, rows) => {
     if (err) {
       throw err;

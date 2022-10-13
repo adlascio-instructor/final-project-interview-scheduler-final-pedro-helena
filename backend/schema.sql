@@ -60,6 +60,14 @@ VALUES
 
 INSERT INTO appointment(time, day_id)
 VALUES
-    ("10:00", 3);
+    ("2pm", 3);
+
+INSERT INTO appointment(time, day_id)
+VALUES
+    ("12pm", 1);
+
+    INSERT INTO appointment(time, day_id)
+VALUES
+    ("4pm", 5);
 
 -- SELECT * FROM days;
