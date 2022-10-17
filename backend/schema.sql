@@ -40,7 +40,7 @@ CREATE TABLE avaiableInterviewer(
 
 INSERT INTO days(id, name, spots)
 VALUES
-    (1, "Monday" , 3);
+    (1, "Mondays" , 3);
 
 INSERT INTO days(id, name, spots)
 VALUES
@@ -71,3 +71,23 @@ VALUES
     ("4pm", 5);
 
 -- SELECT * FROM days;
+
+INSERT INTO interviewer ( name, avatar)
+VALUES
+    ('Sylvia Palmer',"https://i.imgur.com/LpaY82x.png" );
+
+INSERT INTO interviewer ( name, avatar)
+VALUES
+    ('Tori Malcolm',"https://i.imgur.com/Nmx0Qxo.png" );
+
+INSERT INTO interviewer (name, avatar)
+VALUES
+    ('Mildred Nazir',"https://i.imgur.com/T2WwVfS.png" );
+
+INSERT INTO interviewer (name, avatar)
+VALUES
+    ('Cohana Roy',"https://i.imgur.com/FK8V841.jpg" );
+
+INSERT INTO interviewer (name, avatar)
+VALUES
+    ('Sven Jones',"https://i.imgur.com/twYrpay.jpg" );

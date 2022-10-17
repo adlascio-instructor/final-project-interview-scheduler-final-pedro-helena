@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import axios from 'axios';
 
 import "./App.scss";
 
@@ -13,33 +14,41 @@ export default function Application() {
   const [appointments, setAppointments] = useState({});
 
   useEffect(() => {
-    fetch("http://localhost:8000/days")
-      .then((res) => res.json())
+    axios.get("http://localhost:8000/days")
+      // .then((res) => res.json())
       .then(
         (result) => {
-          console.log(result);
-          setDays(result);
+          console.log(result.data);
+          setDays(result.data);
         },
         (error) => {
           console.log(error);
         }
       );
+  }, [day]);
 
-    fetch("http://localhost:8000/appointments")
-      .then((res) => res.json())
+  useEffect(() => {
+    console.log(day);
+     axios.get("http://localhost:8000/appointments/" + day)      
       .then(
         (result) => {
-          setAppointments(result);
+          setAppointments(result.data);
         },
         (error) => {
           console.log(error);
         }
       );
-  }, []);
-
+    }, [appointments]);
+  
+  
   function bookInterview(id, interview) {
+    var marreta = {student: interview.student,appointment: id, interviewerid: interview.interviewer.id, day: null}
     console.log(id, interview);
+    console.log(appointments);
+    console.log(appointments[id]);
+    console.log(interview.interviewer.id);
     const isEdit = appointments[id].interview;
+
     setAppointments((prev) => {
       const appointment = {
         ...prev[id],
@@ -51,6 +60,11 @@ export default function Application() {
       };
       return appointments;
     });
+    if (!appointments[id].interview){
+      
+      axios.post("http://localhost:8000/interview_post", marreta);
+
+    }
     if (!isEdit) {
       setDays((prev) => {
         const updatedDay = {
@@ -66,6 +80,8 @@ export default function Application() {
     }
   }
   function cancelInterview(id) {
+    axios.post('http://localhost:8000/interview_delete/', appointments[id]);
+    console.log(appointments)
     setAppointments((prev) => {
       const updatedAppointment = {
         ...prev[id],
